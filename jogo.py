@@ -48,3 +48,15 @@ class Heroi(Personagem):
         dano = random.randint(self.get_nivel() * 5, self.get_nivel() * 8) 
         alvo.receber_ataque(dano)
         print(f"{self.get_nome()} usou a habilidade especial {self.get_habilidade()} em {alvo.get_nome()} e causou {dano} de dano!")
+        
+        
+class Inimigo(Personagem):
+    def __init__(self, nome, vida, nivel, tipo):
+        super().__init__(nome, vida, nivel)
+        self.__tipo = tipo
+        
+    def get_tipo(self):
+        return self.__tipo
+    
+    def exibir_detalhes(self):
+        return Fore.RED + f"{super().exibir_detalhes()}\nTipo: {self.get_tipo()}\n"
