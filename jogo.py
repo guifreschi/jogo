@@ -60,3 +60,42 @@ class Inimigo(Personagem):
     
     def exibir_detalhes(self):
         return Fore.RED + f"{super().exibir_detalhes()}\nTipo: {self.get_tipo()}\n"
+    
+    
+class Jogo:
+    """ Class orquestradora do jogo """
+    
+    def __init__(self):
+        self.heroi = Heroi("Herói", 100, 5, "Super Força")
+        self.inimigo = Inimigo("Morcego", 50, 3, "Voador")
+                
+    def iniciar_batalha(self):
+        """ Fazer a gestão da batalha em turnos """
+        print(Fore.GREEN + "\nIniciando Batalha!".center(50, " "))
+        while self.heroi.get_vida() > 0 and self.inimigo.get_vida() > 0:
+            print(Fore.YELLOW + "\nDetalhe dos Personagens: ")
+            print(self.heroi.exibir_detalhes())
+            print(self.inimigo.exibir_detalhes())
+            
+            input(Style.RESET_ALL + "Pressione Enter para atacar...")
+            escolha = input("Escolha: (1- Ataque Normal) (2- Ataque Especial): ")
+            
+            if escolha == "1":
+                self.heroi.atacar(self.inimigo)
+            elif escolha == "2":
+                self.heroi.ataque_especial(self.inimigo)
+            else:
+                print("Escolha inválida. Escolha novamente.")
+                
+            if self.inimigo.get_vida() > 0:
+                # Inimigo ataca herói
+                self.inimigo.atacar(self.heroi)
+                
+        if self.heroi.get_vida() > 0:
+            print("\nParabéns! Você venceu a batalha!")
+        else:
+            print("\nVocê foi derrotado!")
+                
+# Criar instância do jogo e iniciar batalha
+jogo = Jogo()
+jogo.iniciar_batalha()
